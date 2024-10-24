@@ -30,7 +30,7 @@ const Navbar = () => {
 
     return (
         <Box sx={{flexGrow: 1}}>
-            <AppBar position="fixed" elevation={0} sx={{}}>
+            <AppBar position="static" elevation={0} sx={{}}>
                 <Container maxWidth="xl">
                     <Toolbar disableGutters>
                         <Typography
