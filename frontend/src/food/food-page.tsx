@@ -1,8 +1,10 @@
+import Box from "@mui/material/Box";
+
 const FoodPage = () => {
     return(
-        <div>
-            <h1>Food Page</h1>
-        </div>
+        <Box className="food-page">
+            <h1 className="page-header">Food Page</h1>
+        </Box>
     )
 }
 export default FoodPage

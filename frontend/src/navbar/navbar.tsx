@@ -30,7 +30,16 @@ const Navbar = () => {
 
     return (
         <Box sx={{flexGrow: 1}}>
-            <AppBar position="static" elevation={0} sx={{}}>
+            <AppBar
+                position="fixed"
+                elevation={0}
+                sx={{
+                    backgroundColor: 'rgba(79,232,133,0.5)',
+                    color: '#004D61',
+                    borderBottom: '1px solid black',
+                    backdropFilter: 'blur(8px)',
+                }}
+            >
                 <Container maxWidth="xl">
                     <Toolbar disableGutters>
                         <Typography
@@ -78,7 +87,8 @@ const Navbar = () => {
                                 sx={{display: {xs: 'block', md: 'none'}}}
                             >
                                 {pages.map((page) => (
-                                    <MenuItem key={page.name} onClick={handleCloseNavMenu} component={Link} to={page.path}>
+                                    <MenuItem key={page.name} onClick={handleCloseNavMenu} component={Link}
+                                              to={page.path}>
                                         <Typography sx={{textAlign: 'center'}}>{page.name}</Typography>
                                     </MenuItem>
                                 ))}
@@ -108,7 +118,7 @@ const Navbar = () => {
                                 <Button
                                     key={page.name}
                                     onClick={handleCloseNavMenu}
-                                    sx={{my: 2, color: 'white', display: 'block'}}
+                                    sx={{my: 2, color: 'inherit', display: 'block'}}
                                     component={Link}
                                     to={page.path}
                                 >

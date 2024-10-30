@@ -1,4 +1,50 @@
-html, body {
+body {
   margin: 0;
-  padding: 0;
+    padding: 64px 0 0;
+    /* Apply this CSS to your component or globally */
+    /* Keeps the background static */
+    background: linear-gradient(
+            135deg,
+            #8ee4f5 25%, /* Light cyan */ #6decb9 50%, /* Soft green, forming the split */ #8ee4f5 75% /* Re-introduce cyan to match hues */
+    ) fixed;
+    background-size: cover; /* Ensures the gradient covers the entire container */
+}
+
+.landing-header-container {
+    background-color: rgba(0, 0, 0, 0.4);
+    padding: 20px 40px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.landing-header-text {
+    background: linear-gradient(90deg, #B2F9FC, #CFFFD1);
+    box-shadow: 0 4px 20px rgba(178, 249, 252, 0.6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: clamp(40px, 8vw, 80px);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    margin: 0;
+}
+
+#landing-page-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 64px);
+    fontSize: 30px;
+    background-image: url('./assets/landing_bg_image.webp');
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.page-header {
+    display: flex;
+    padding: 5px;
+}
+
+.page-container {
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 64px);
 }
