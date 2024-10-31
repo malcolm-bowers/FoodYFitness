@@ -1,3 +1,17 @@
 spring:
   application:
     name: FoodYFitness
+
+  datasource:
+    url: jdbc:postgresql://localhost:5444/foodyfitness
+    driver-class-name: org.postgresql.Driver
+    username: foody_dev
+    password: foody_dev
+  jpa:
+    generate-ddl: false
+    hibernate:
+      ddl-auto: none
+
+  flyway:
+    enabled: true
+    locations: classpath:db/migration

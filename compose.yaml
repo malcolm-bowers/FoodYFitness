@@ -1,1 +1,16 @@
 services:
+  postgres-db:
+    container_name: foodyfitness
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_USER: foody_dev
+      POSTGRES_PASSWORD: foody_dev
+      POSTGRES_DB: foodyfitness
+      POSTGRES_HOST_AUTH_METHOD: password
+    ports:
+      - '5444:5432'
+
+volumes:
+  postgresql_data:
+    driver: local
