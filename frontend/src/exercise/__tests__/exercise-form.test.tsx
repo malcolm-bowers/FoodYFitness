@@ -9,7 +9,7 @@ describe("Exercise Form", () => {
         id: 1,
         name: "pushups",
         type: "upperbody",
-        calories: "10"
+        calories: 10
     }
 
     describe("Render Form", () => {
@@ -41,7 +41,7 @@ describe("Exercise Form", () => {
 
             expect(screen.getByLabelText(/name/i)).toHaveValue("");
             expect(screen.getByLabelText(/type/i)).toHaveValue("");
-            expect(screen.getByLabelText(/calories/i)).toHaveValue("0");
+            expect(screen.getByLabelText(/calories/i)).toHaveValue(0);
 
             await userEvent.type(screen.getByLabelText(/name/i), mockExercise.name);
             await userEvent.type(screen.getByLabelText(/type/i), mockExercise.type);
@@ -55,7 +55,7 @@ describe("Exercise Form", () => {
 
             expect(screen.getByLabelText(/name/i)).toHaveValue("");
             expect(screen.getByLabelText(/type/i)).toHaveValue("");
-            expect(screen.getByLabelText(/calories/i)).toHaveValue("0");
+            expect(screen.getByLabelText(/calories/i)).toHaveValue(0);
         })
     })
     describe("Form Submission", () => {

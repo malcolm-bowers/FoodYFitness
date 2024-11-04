@@ -81,12 +81,17 @@ const ExerciseForm = () => {
                     id="calories"
                     label="Calories/Rep"
                     variant="outlined"
+                    slotProps={{
+                        htmlInput: {
+                            type: "number"
+                        }
+                    }}
                     value={calories}
                     onChange={(e) => setCalories(parseInt(e.target.value))}
                 />
-                 <Button id="sumbit" type="submit" variant="contained">
-                     Add
-                 </Button>
+                <Button id="sumbit" type="submit" variant="contained">
+                    Add
+                </Button>
             </Box>
         </Box>
     )
