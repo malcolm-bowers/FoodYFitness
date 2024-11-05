@@ -15,7 +15,7 @@ public class Exercise {
 
     private String type;
 
-    private int calories;
+    private float calories;
 
     public Exercise() {
     }
@@ -50,11 +50,11 @@ public class Exercise {
         this.type = type;
     }
 
-    public int getCalories() {
+    public float getCalories() {
         return calories;
     }
 
-    public void setCalories(int calories) {
+    public void setCalories(float calories) {
         this.calories = calories;
     }
 }

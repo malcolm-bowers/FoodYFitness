@@ -35,6 +35,7 @@ body {
     fontSize: 30px;
     background-image: url('./assets/landing_bg_image.webp');
     background-size: cover;
+    background-position: center;
     background-repeat: no-repeat;
 }
 

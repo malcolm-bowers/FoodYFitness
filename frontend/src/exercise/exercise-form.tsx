@@ -1,14 +1,15 @@
 import Box from "@mui/material/Box";
-import {TextField} from "@mui/material";
+import {FormControl, InputLabel, Select, TextField} from "@mui/material";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import {FormEvent, useState} from "react";
 import {Exercise, saveExercise} from "./exercise-service.ts";
+import MenuItem from "@mui/material/MenuItem";
 
 const ExerciseForm = () => {
     const [name, setName] = useState("");
     const [type, setType] = useState("");
-    const [calories, setCalories] = useState(0);
+    const [calories, setCalories] = useState(0.0);
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -61,21 +62,28 @@ const ExerciseForm = () => {
                 onSubmit={handleSubmit}
             >
                 <TextField
-                    style={{flex: "1"}}
+                    style={{flex: "2"}}
                     id="name"
                     label="Name"
                     variant="outlined"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                 />
-                <TextField
-                    style={{flex: "1"}}
-                    id="type"
-                    label="Type"
-                    variant="outlined"
-                    value={type}
-                    onChange={(e) => setType(e.target.value)}
-                />
+                <FormControl fullWidth sx={{flex: 2}}>
+                    <InputLabel id="type" htmlFor="type">Type</InputLabel>
+                    <Select
+                        labelId="type"
+                        id="type"
+                        label="Type"
+                        value={type}
+                        onChange={(e) => setType(e.target.value)}
+                    >
+                        <MenuItem value={"upperbody"}>Upper Body</MenuItem>
+                        <MenuItem value={"lowerbody"}>Lower Body</MenuItem>
+                        <MenuItem value={"core"}>Core</MenuItem>
+                        <MenuItem value={"fullbody"}>Full Body</MenuItem>
+                    </Select>
+                </FormControl>
                 <TextField
                     style={{flex: "1"}}
                     id="calories"
@@ -83,11 +91,12 @@ const ExerciseForm = () => {
                     variant="outlined"
                     slotProps={{
                         htmlInput: {
-                            type: "number"
+                            type: "number",
+                            step: "any"
                         }
                     }}
                     value={calories}
-                    onChange={(e) => setCalories(parseInt(e.target.value))}
+                    onChange={(e) => setCalories(parseFloat(e.target.value))}
                 />
                 <Button id="sumbit" type="submit" variant="contained">
                     Add
