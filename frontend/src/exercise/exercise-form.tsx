@@ -14,21 +14,19 @@ const ExerciseForm = () => {
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        let exercise: Partial<Exercise> = {
+        const exercise: Partial<Exercise> = {
             name: name,
             type: type,
             calories: calories,
         }
         await saveExercise(exercise);
-        setName("");
-        setType("");
-        setCalories(0);
+        handleClear()
     }
 
     const handleClear = () => {
         setName("");
         setType("");
-        setCalories(0);
+        setCalories(0.0);
     };
 
     return (
@@ -73,15 +71,14 @@ const ExerciseForm = () => {
                     <InputLabel id="type" htmlFor="type">Type</InputLabel>
                     <Select
                         labelId="type"
-                        id="type"
                         label="Type"
                         value={type}
                         onChange={(e) => setType(e.target.value)}
                     >
-                        <MenuItem value={"upperbody"}>Upper Body</MenuItem>
-                        <MenuItem value={"lowerbody"}>Lower Body</MenuItem>
-                        <MenuItem value={"core"}>Core</MenuItem>
-                        <MenuItem value={"fullbody"}>Full Body</MenuItem>
+                        <MenuItem value={"Upper-Body"}>Upper-Body</MenuItem>
+                        <MenuItem value={"Lower-Body"}>Lower-Body</MenuItem>
+                        <MenuItem value={"Core"}>Core</MenuItem>
+                        <MenuItem value={"Full-Body"}>Full-Body</MenuItem>
                     </Select>
                 </FormControl>
                 <TextField
@@ -96,7 +93,10 @@ const ExerciseForm = () => {
                         }
                     }}
                     value={calories}
-                    onChange={(e) => setCalories(parseFloat(e.target.value))}
+                    onChange={(e) => {
+                        const value = parseFloat(e.target.value)
+                        setCalories(isNaN(value) ? 0 : value)
+                    }}
                 />
                 <Button id="sumbit" type="submit" variant="contained">
                     Add

@@ -8,7 +8,11 @@ import org.mockito.MockitoAnnotations;
 import swf.army.mil.FoodYFitness.enitity.Exercise;
 import swf.army.mil.FoodYFitness.repository.ExerciseRepository;
 
-import static org.mockito.Mockito.when;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.*;
 
 class ExerciseServiceTest {
     @Mock
@@ -18,11 +22,15 @@ class ExerciseServiceTest {
     private ExerciseService exerciseService;
 
     private Exercise pushups;
+    private Exercise situps;
+    private List<Exercise> exercises;
 
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        pushups = new Exercise("Pushups", "Upperbody", 20);
+        pushups = new Exercise("Pushups", "Upper-Body", 0.5);
+        situps = new Exercise("Situps", "Lower-Body", 0.3);
+        exercises = new ArrayList<Exercise>(List.of(pushups, situps));
     }
 
     @Test
@@ -31,4 +39,11 @@ class ExerciseServiceTest {
         Exercise actualRequest = exerciseService.saveExercise(pushups);
     }
 
+    @Test
+    void fetchExercisesShouldReturnAllExercises() {
+        when(exerciseRepository.findAll()).thenReturn(exercises);
+        List<Exercise> listOfExerciseRequests = exerciseService.getAllExercises();
+        verify(exerciseRepository, times(1)).findAll();
+        assertThat(listOfExerciseRequests).isEqualTo(exercises);
+    }
 }

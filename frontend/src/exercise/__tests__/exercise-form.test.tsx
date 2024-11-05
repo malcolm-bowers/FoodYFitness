@@ -8,8 +8,8 @@ describe("Exercise Form", () => {
     const mockExercise = {
         id: 1,
         name: "pushups",
-        type: "upperbody",
-        calories: 10
+        type: "Upper-Body",
+        calories: 1.0
     }
 
     describe("Render Form", () => {
@@ -38,24 +38,24 @@ describe("Exercise Form", () => {
     describe("Clear Button Functionality", () => {
         it("should clear the form entries", async () => {
             render(<ExerciseForm/>);
+            const nameInput = screen.getByLabelText(/name/i);
+            const typeSelect = screen.getByLabelText(/type/i)
+            const caloriesInput = screen.getByLabelText(/calories/i);
 
-            expect(screen.getByLabelText(/name/i)).toHaveValue("");
-            expect(screen.getByLabelText(/type/i)).toHaveValue("");
-            expect(screen.getByLabelText(/calories/i)).toHaveValue(0);
+            await userEvent.type(nameInput, mockExercise.name);
+            await userEvent.click(typeSelect);
+            await userEvent.click(screen.getByRole('option', {name: /upper-body/i}))
+            await userEvent.type(caloriesInput, mockExercise.calories.toString());
 
-            await userEvent.type(screen.getByLabelText(/name/i), mockExercise.name);
-            await userEvent.type(screen.getByLabelText(/type/i), mockExercise.type);
-            await userEvent.type(screen.getByLabelText(/calories/i), mockExercise.calories.toString());
-
-            expect(screen.getByLabelText(/name/i)).toHaveValue(mockExercise.name);
-            expect(screen.getByLabelText(/type/i)).toHaveValue(mockExercise.type);
-            expect(screen.getByLabelText(/calories/i)).toHaveValue(mockExercise.calories);
+            expect(nameInput).toHaveValue(mockExercise.name);
+            expect(typeSelect).toHaveTextContent("Upper-Body");
+            expect(caloriesInput).toHaveValue(mockExercise.calories);
 
             await userEvent.click(screen.getByRole('button', {name: /clear/i}));
 
-            expect(screen.getByLabelText(/name/i)).toHaveValue("");
-            expect(screen.getByLabelText(/type/i)).toHaveValue("");
-            expect(screen.getByLabelText(/calories/i)).toHaveValue(0);
+            expect(nameInput).toHaveValue("");
+            expect(screen.queryByText(/upper body/i)).not.toBeInTheDocument();
+            expect(caloriesInput).toHaveValue(0);
         })
     })
     describe("Form Submission", () => {
@@ -65,21 +65,22 @@ describe("Exercise Form", () => {
                 .mockResolvedValue({
                     id: 1,
                     name: "pushups",
-                    type: "upperbody",
-                    calories: 10
+                    type: "Upper-Body",
+                    calories: 1.0
                 })
             const user = userEvent.setup()
             render(<ExerciseForm/>);
-
+            const selectElement = (screen.getByRole('combobox', {name: /type/i}))
             await user.type(screen.getByLabelText(/name/i), mockExercise.name);
-            await user.type(screen.getByLabelText(/type/i), mockExercise.type);
+            await user.click(selectElement);
+            await user.click(screen.getByRole('option', {name: /upper-body/i}));
             await user.type(screen.getByLabelText(/calories/i), mockExercise.calories.toString());
             await user.click(screen.getByRole('button', {name: /add/i}));
 
             expect(saveExerciseSpy).toHaveBeenCalledWith({
                 name: mockExercise.name,
                 type: mockExercise.type,
-                calories: 10
+                calories: 1.0
             })
         })
     })

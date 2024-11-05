@@ -12,6 +12,8 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import swf.army.mil.FoodYFitness.enitity.Exercise;
 import swf.army.mil.FoodYFitness.service.ExerciseService;
 
+import java.util.ArrayList;
+
 import static org.mockito.ArgumentMatchers.any;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -28,7 +30,7 @@ class ExerciseControllerTest {
     @MockBean
     private ExerciseService exerciseService;
 
-    Exercise exercise = new Exercise("Pushups", "Upperbody", 20);
+    Exercise exercise = new Exercise("Push-ups", "Upper-Body", 0.5);
 
     @Test
     void shouldSaveExercise() throws Exception {
@@ -41,9 +43,30 @@ class ExerciseControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(exerciseJson))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.name").value("Pushups"))
-                .andExpect(jsonPath("$.type").value("Upperbody"))
-                .andExpect(jsonPath("$.calories").value(20));
+                .andExpect(jsonPath("$.name").value("Push-ups"))
+                .andExpect(jsonPath("$.type").value("Upper-Body"))
+                .andExpect(jsonPath("$.calories").value(0.5));
         Mockito.verify(exerciseService).saveExercise(any(Exercise.class));
+    }
+
+    @Test
+    void shouldGetAllExercises() throws Exception {
+        Exercise mockExercise1 = new Exercise("Push-ups", "Upper-Body", 0.5);
+        Exercise mockExercise2 = new Exercise("Sit-ups", "Core", 0.1);
+
+        ArrayList<Exercise> mockExercises = new ArrayList<>();
+        mockExercises.add(mockExercise1);
+        mockExercises.add(mockExercise2);
+
+        Mockito.when(exerciseService.getAllExercises()).thenReturn(mockExercises);
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .get("/api/exercise")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].name").value("Push-ups"))
+                .andExpect(jsonPath("$[0].type").value("Upper-Body"))
+                .andExpect(jsonPath("$[0].calories").value(0.5));
+        Mockito.verify(exerciseService).getAllExercises();
     }
 }

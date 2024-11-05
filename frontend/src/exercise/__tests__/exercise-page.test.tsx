@@ -8,12 +8,11 @@ describe("Exercise Page", () => {
             render(<ExercisePage/>);
         })
         it("should render correctly with heading", () => {
-            expect(screen.getByRole('heading', {name: /exercise page/i})).toBeVisible();
+            expect(screen.getByRole('heading', {name: /exercises/i})).toBeVisible();
         });
         it("should show the exercise list component", () => {
             expect(screen.getByRole('heading', {name: /exercise list/i})).toBeVisible()
         })
-
         it("should render the exercise form", () => {
             expect(screen.getByRole('heading', {name: /add new exercise/i})).toBeVisible();
         })

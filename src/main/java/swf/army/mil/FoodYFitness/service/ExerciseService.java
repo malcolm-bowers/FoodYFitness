@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import swf.army.mil.FoodYFitness.enitity.Exercise;
 import swf.army.mil.FoodYFitness.repository.ExerciseRepository;
 
+import java.util.List;
+
 @Service
 public class ExerciseService {
 
@@ -15,5 +17,9 @@ public class ExerciseService {
 
     public Exercise saveExercise(Exercise exercise) {
         return exerciseRepository.save(exercise);
+    }
+
+    public List<Exercise> getAllExercises() {
+        return exerciseRepository.findAll();
     }
 }

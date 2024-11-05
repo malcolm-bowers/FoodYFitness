@@ -1,12 +1,11 @@
 package swf.army.mil.FoodYFitness.controller;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import swf.army.mil.FoodYFitness.enitity.Exercise;
 import swf.army.mil.FoodYFitness.service.ExerciseService;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/exercise")
@@ -18,7 +17,12 @@ public class ExerciseController {
     }
 
     @PostMapping()
-    ResponseEntity<Exercise> saveExercise(@RequestBody Exercise exercise) {
+    public ResponseEntity<Exercise> saveExercise(@RequestBody Exercise exercise) {
         return ResponseEntity.ok(exerciseService.saveExercise(exercise));
+    }
+
+    @GetMapping()
+    public ResponseEntity<List<Exercise>> findAllExercises() {
+        return ResponseEntity.ok(exerciseService.getAllExercises());
     }
 }
