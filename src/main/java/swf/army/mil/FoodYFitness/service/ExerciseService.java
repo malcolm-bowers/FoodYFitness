@@ -22,4 +22,8 @@ public class ExerciseService {
     public List<Exercise> getAllExercises() {
         return exerciseRepository.findAll();
     }
+
+    public void deleteExercise(long id) {
+        exerciseRepository.deleteById(id);
+    }
 }

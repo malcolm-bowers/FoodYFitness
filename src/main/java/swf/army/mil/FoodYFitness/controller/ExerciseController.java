@@ -25,4 +25,9 @@ public class ExerciseController {
     public ResponseEntity<List<Exercise>> findAllExercises() {
         return ResponseEntity.ok(exerciseService.getAllExercises());
     }
+
+    @DeleteMapping("/{id}")
+    public void deleteExercise(@PathVariable long id) {
+        exerciseService.deleteExercise(id);
+    }
 }

@@ -46,4 +46,10 @@ class ExerciseServiceTest {
         verify(exerciseRepository, times(1)).findAll();
         assertThat(listOfExerciseRequests).isEqualTo(exercises);
     }
+
+    @Test
+    void deleteExerciseShouldDeleteExercise() {
+        exerciseService.deleteExercise(1L);
+        verify(exerciseRepository, times(1)).deleteById(1L);
+    }
 }

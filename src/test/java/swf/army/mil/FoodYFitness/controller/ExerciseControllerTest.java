@@ -69,4 +69,11 @@ class ExerciseControllerTest {
                 .andExpect(jsonPath("$[0].calories").value(0.5));
         Mockito.verify(exerciseService).getAllExercises();
     }
+
+    @Test
+    void shouldDeleteRequestToRemoveExercise() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/exercise/1"))
+                .andExpect(status().isOk());
+        Mockito.verify(exerciseService, Mockito.times(1)).deleteExercise(1);
+    }
 }
