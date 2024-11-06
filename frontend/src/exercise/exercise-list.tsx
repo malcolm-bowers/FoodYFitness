@@ -8,7 +8,7 @@ import Paper from '@mui/material/Paper';
 import IconButton from '@mui/material/IconButton';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-import {Exercise} from './exercise-service.ts';
+import {deleteExercise, Exercise} from './exercise-service.ts';
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 
@@ -17,6 +17,12 @@ interface ExerciseTableProps {
 }
 
 export default function ExerciseTable({exercises}: ExerciseTableProps) {
+    const handleDelete = (exercise: Exercise) => {
+        if (confirm(`Are you sure you want to delete this "${exercise.name}"?`)){
+            deleteExercise(exercise.id);
+        }
+    }
+
     return (
         <Box>
             <Typography variant={"h5"}>
@@ -44,7 +50,7 @@ export default function ExerciseTable({exercises}: ExerciseTableProps) {
                                     <IconButton aria-label="edit">
                                         <EditIcon/>
                                     </IconButton>
-                                    <IconButton aria-label="delete">
+                                    <IconButton aria-label="delete" onClick={() => handleDelete(exercise)}>
                                         <DeleteIcon/>
                                     </IconButton>
                                 </TableCell>
