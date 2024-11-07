@@ -30,4 +30,9 @@ public class ExerciseController {
     public void deleteExercise(@PathVariable long id) {
         exerciseService.deleteExercise(id);
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Exercise> updateExercise(@PathVariable long id, @RequestBody Exercise exercise) {
+        return ResponseEntity.ok(exerciseService.updateExercise(id, exercise));
+    }
 }

@@ -26,4 +26,15 @@ public class ExerciseService {
     public void deleteExercise(long id) {
         exerciseRepository.deleteById(id);
     }
+
+    public Exercise updateExercise(Long id, Exercise exercise) {
+        return exerciseRepository.findById(id)
+                .map(existingExercise -> {
+                    existingExercise.setName(exercise.getName());
+                    existingExercise.setType(exercise.getType());
+                    existingExercise.setCalories(exercise.getCalories());
+                    return exerciseRepository.save(existingExercise);
+                })
+                .orElse(null);
+    }
 }

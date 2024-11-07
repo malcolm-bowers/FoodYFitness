@@ -10,6 +10,7 @@ import swf.army.mil.FoodYFitness.repository.ExerciseRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
@@ -51,5 +52,21 @@ class ExerciseServiceTest {
     void deleteExerciseShouldDeleteExercise() {
         exerciseService.deleteExercise(1L);
         verify(exerciseRepository, times(1)).deleteById(1L);
+    }
+
+    @Test
+    void updateExerciseShouldUpdateExercise() {
+        Exercise currentExercise = new Exercise(
+            1L, "pushups", "Upper-Body", 0.5
+        );
+        when(exerciseRepository.findById(currentExercise.getId())).thenReturn(Optional.of(currentExercise));
+        Exercise updatedExercise = new Exercise(1L, "pushups", "Upper-Body", 0.3);
+        when(exerciseRepository.save(currentExercise)).thenReturn(updatedExercise);
+        Exercise result = exerciseService.updateExercise(currentExercise.getId(), updatedExercise);
+
+        assertThat(result).isNotNull();
+        assertThat(result.getId()).isEqualTo(updatedExercise.getId());
+        assertThat(result.getName()).isEqualTo(updatedExercise.getName());
+        assertThat(result.getCalories()).isEqualTo(updatedExercise.getCalories());
     }
 }

@@ -20,6 +20,13 @@ public class Exercise {
     public Exercise() {
     }
 
+    public Exercise(Long id, String name, String type, double calories) {
+        this.id = id;
+        this.name = name;
+        this.type = type;
+        this.calories = calories;
+    }
+
     public Exercise(String name, String type, double calories) {
         this.name = name;
         this.type = type;
@@ -54,7 +61,7 @@ public class Exercise {
         return calories;
     }
 
-    public void setCalories(float calories) {
+    public void setCalories(double calories) {
         this.calories = calories;
     }
 }

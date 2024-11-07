@@ -76,4 +76,15 @@ class ExerciseControllerTest {
                 .andExpect(status().isOk());
         Mockito.verify(exerciseService, Mockito.times(1)).deleteExercise(1);
     }
+
+    @Test
+    void shouldSendPutRequestToExercise() throws Exception {
+        Mockito.when(exerciseService.updateExercise(any(Long.class),any(Exercise.class))).thenReturn(exercise);
+        String exerciseJson = objectMapper.writeValueAsString(exercise);
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/exercise/1")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(exerciseJson))
+                .andExpect(status().isOk());
+        Mockito.verify(exerciseService, Mockito.times(1)).updateExercise(any(Long.class),any(Exercise.class));
+    }
 }
