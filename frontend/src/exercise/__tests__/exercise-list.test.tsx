@@ -13,9 +13,11 @@ describe("ExerciseList", () => {
             {id: 1, name: "pushups", type: "Upper-Body", calories: 0.5},
             {id: 2, name: "situps", type: "Core", calories: 0.1}
         ]
-        render(<ExerciseList exercises={mockExercises}/>);
     })
     describe("Renders correctly", () => {
+        beforeEach(() => {
+            render(<ExerciseList exercises={mockExercises} getSelectedExercise={vi.fn()}/>);
+        })
         it("should show header", () => {
             expect(screen.getByRole('heading', {name: /exercise list/i})).toBeVisible();
         })
@@ -34,12 +36,12 @@ describe("ExerciseList", () => {
             expect(screen.getAllByRole('button', {name: /delete/i})[1]).toBeVisible();
         })
     })
-    describe("Delete button", () => {
+    describe("Option buttons", () => {
         it('should call delete exercise when delete button is clicked', async () => {
             const mockDeleteExercise = vi.spyOn(exerciseService, 'deleteExercise')
                 .mockResolvedValue();
             vi.spyOn(window, 'confirm').mockReturnValueOnce(true)
-            render(<ExerciseList exercises={mockExercises}/>);
+            render(<ExerciseList exercises={mockExercises} getSelectedExercise={vi.fn()}/>);
 
             const listItems = await screen.getAllByRole('row');
             const exerciseToDelete = listItems[1];
@@ -48,6 +50,13 @@ describe("ExerciseList", () => {
 
             expect(mockDeleteExercise).toHaveBeenCalledOnce();
             expect(mockDeleteExercise).toHaveBeenCalledWith(1);
+        })
+        it('should getSelectedExercise when the edit button is clicked', async () => {
+            const mockSelectedExercise = vi.fn()
+            render(<ExerciseList exercises={mockExercises} getSelectedExercise={mockSelectedExercise}/>);
+            await userEvent.click(screen.getAllByRole('button', {name: /edit/i})[0]);
+
+            expect(mockSelectedExercise).toHaveBeenCalledWith(mockExercises[0]);
         })
     })
 })

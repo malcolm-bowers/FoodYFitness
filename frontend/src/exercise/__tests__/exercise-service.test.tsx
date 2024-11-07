@@ -71,7 +71,7 @@ describe("ExerciseService", () => {
             status: 200,
         })
 
-        const result = await updateExercise(mockExercise.id, mockExercise);
+        const result = await updateExercise(mockExercise);
 
         expect(axiosPutMock).toHaveBeenCalledWith(`/api/exercise/${mockExercise.id}`, mockExercise);
 

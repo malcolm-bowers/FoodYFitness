@@ -8,19 +8,19 @@ export type Exercise = {
 }
 type DeleteExercise = (id: number | null) => Promise<void>;
 
-export const saveExercise = (data: Partial<Exercise>) => {
+export const saveExercise = async (data: Partial<Exercise>) => {
     try {
-        return axios.post('/api/exercise', data)
-            .then((r: AxiosResponse<Exercise>) => r.data);
+        const r = await axios.post('/api/exercise', data);
+        return r.data;
     } catch (e) {
         return Promise.reject(e);
     }
 }
 
-export const fetchExercise = () => {
+export const fetchExercise = async () => {
     try {
-        return axios.get<Exercise[]>('/api/exercise')
-            .then((r: AxiosResponse<Exercise[]>) => r.data);
+        const r = await axios.get<Exercise[]>('/api/exercise');
+        return r.data;
     } catch (e) {
         return Promise.reject(e);
     }
@@ -31,10 +31,10 @@ export const deleteExercise: DeleteExercise = (id: number | null) => (
         .then((r: AxiosResponse) => r.data)
 );
 
-export const updateExercise = (id: number, data: Partial<Exercise>): Promise<Exercise> => {
+export const updateExercise = async (data: Exercise): Promise<Exercise> => {
     try {
-        return axios.put(`/api/exercise/${id}`, data)
-            .then((r: AxiosResponse<Exercise>) => r.data);
+        const r = await axios.put(`/api/exercise/${data.id}`, data);
+        return r.data;
     } catch (e) {
         return Promise.reject(e);
     }

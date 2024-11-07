@@ -2,24 +2,47 @@ import Box from "@mui/material/Box";
 import {FormControl, InputLabel, Select, TextField} from "@mui/material";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import {FormEvent, useState} from "react";
-import {Exercise, saveExercise} from "./exercise-service.ts";
+import {FormEvent, useEffect, useState} from "react";
+import {Exercise, saveExercise, updateExercise} from "./exercise-service.ts";
 import MenuItem from "@mui/material/MenuItem";
 
-const ExerciseForm = () => {
+interface ExerciseFromProps {
+    selectedExercise?: Exercise | null,
+    getSelectedExercise: (exercise: (Exercise | null)) => void
+}
+
+const ExerciseForm = ({selectedExercise, getSelectedExercise}: ExerciseFromProps) => {
     const [name, setName] = useState("");
     const [type, setType] = useState("");
     const [calories, setCalories] = useState(0.0);
 
+    useEffect(() => {
+        if (selectedExercise) {
+            setName(selectedExercise.name);
+            setType(selectedExercise.type);
+            setCalories(selectedExercise.calories);
+        }
+    }, [selectedExercise]);
+
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        const exercise: Partial<Exercise> = {
-            name: name,
-            type: type,
-            calories: calories,
+        if(selectedExercise) {
+            const exercise = {
+                id: selectedExercise.id,
+                name,
+                type,
+                calories
+            }
+            await updateExercise(exercise);
+        } else {
+            const newExercise = {
+                name,
+                type,
+                calories,
+            }
+            await saveExercise(newExercise);
         }
-        await saveExercise(exercise);
         handleClear()
     }
 
@@ -27,6 +50,9 @@ const ExerciseForm = () => {
         setName("");
         setType("");
         setCalories(0.0);
+        if(selectedExercise) {
+            getSelectedExercise(null);
+        }
     };
 
     return (
@@ -40,7 +66,9 @@ const ExerciseForm = () => {
                     padding: "10px",
                 }}
             >
-                <Typography variant={"h5"}>Add new exercise:</Typography>
+                <Typography variant={"h5"}>
+                    {selectedExercise ? `Edit Exercise: "${selectedExercise.name}"` : 'Add new exercise:'}
+                </Typography>
                 <Button
                     variant="contained"
                     color="primary"
@@ -74,7 +102,7 @@ const ExerciseForm = () => {
                         label="Type"
                         value={type}
                         onChange={(e) => setType(e.target.value)}
-                    >
+                     variant={'outlined'}>
                         <MenuItem value={"Upper-Body"}>Upper-Body</MenuItem>
                         <MenuItem value={"Lower-Body"}>Lower-Body</MenuItem>
                         <MenuItem value={"Core"}>Core</MenuItem>

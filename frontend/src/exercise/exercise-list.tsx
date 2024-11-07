@@ -14,13 +14,17 @@ import Typography from "@mui/material/Typography";
 
 interface ExerciseTableProps {
     exercises: Exercise[];
+    getSelectedExercise: (exercise: Exercise) => void
 }
 
-export default function ExerciseTable({exercises}: ExerciseTableProps) {
+export default function ExerciseList({exercises, getSelectedExercise}: ExerciseTableProps) {
     const handleDelete = (exercise: Exercise) => {
         if (confirm(`Are you sure you want to delete this "${exercise.name}"?`)){
             deleteExercise(exercise.id);
         }
+    }
+    const handleEdit = (exercise: Exercise) => {
+        getSelectedExercise(exercise)
     }
 
     return (
@@ -47,7 +51,7 @@ export default function ExerciseTable({exercises}: ExerciseTableProps) {
                                 <TableCell align="right">{exercise.type}</TableCell>
                                 <TableCell align="right">{exercise.calories}</TableCell>
                                 <TableCell align="right">
-                                    <IconButton aria-label="edit">
+                                    <IconButton aria-label="edit" onClick={() => handleEdit(exercise)}>
                                         <EditIcon/>
                                     </IconButton>
                                     <IconButton aria-label="delete" onClick={() => handleDelete(exercise)}>
