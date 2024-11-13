@@ -39,10 +39,10 @@ const ExerciseList = ({exercises, getSelectedExercise, getExercises}: ExerciseTa
                 <Table sx={{minWidth: 650}} aria-label="exercise table">
                     <TableHead>
                         <TableRow>
-                            <TableCell>Exercise Name</TableCell>
-                            <TableCell align="right">Type</TableCell>
-                            <TableCell align="right">Calories per Rep</TableCell>
-                            <TableCell align="right">Actions</TableCell>
+                            <TableCell>Exercise Name:</TableCell>
+                            <TableCell align="right">Type:</TableCell>
+                            <TableCell align="right">Calories/Rep:</TableCell>
+                            <TableCell align="right">Actions:</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>

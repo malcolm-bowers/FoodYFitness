@@ -7,7 +7,7 @@ export type Food = {
 }
 
 const foods: Food[] = [
-    { name: 'Donut', servings: 1, gramsPerServing: 23, caloriesPerServing: 275, totalCalories: 275 }
+    { name: 'Glazed Donut', servings: 1, gramsPerServing: 55, caloriesPerServing: 275, totalCalories: 275 }
 ];
 
 export const getFoods = () => foods;

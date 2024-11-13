@@ -7,15 +7,22 @@ import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
 import TableBody from "@mui/material/TableBody";
 import {Food} from "./food-service.ts";
+import {useEffect, useState} from "react";
 
 interface FoodProps {
     foods: Food[],
 }
 
 const FoodList = ({foods}: FoodProps) => {
+const [total, setTotal] = useState(0);
+
+    useEffect(() => {
+        const totalCalories = foods.reduce((sum, food) => sum + food.totalCalories, 0);
+        setTotal(totalCalories);
+    }, [foods]);
 
     return (
-        <Box>
+        <Box padding={2}>
             <Typography
                 variant={'h5'}
                 style={{}}
@@ -51,6 +58,18 @@ const FoodList = ({foods}: FoodProps) => {
                     </TableBody>
                 </Table>
             </TableContainer>
+            <Box
+                style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    padding: "20px"
+                }}
+            >
+                <Typography>Total Calories:</Typography>
+                <Typography>{total}</Typography>
+            </Box>
         </Box>
     )
 }

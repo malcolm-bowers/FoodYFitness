@@ -24,8 +24,8 @@ const createMockFoodFromAPI = (
 }
 
 const results = [
-    createMockFoodFromAPI('Glazed Donut', 23, 275),
-    createMockFoodFromAPI('Chocolate Donut', 35, 325),
+    createMockFoodFromAPI('Glazed Donut', 55, 275),
+    createMockFoodFromAPI('Chocolate Donut', 65, 350),
 ]
 
 interface FoodFormProps {
@@ -144,7 +144,10 @@ const FoodForm = ({handleCloseForm, refreshFoods}: FoodFormProps) => {
                     variant="outlined"
                     type="number"
                     fullWidth
-                    onChange={(e) => setServings(parseInt(e.target.value))}
+                    onChange={(e) => {
+                        const value = parseInt(e.target.value)
+                        setServings(value >= 0 ? value : 0);
+                    }}
                 />
                 <TextField
                     style={{flex: "1"}}
@@ -153,7 +156,10 @@ const FoodForm = ({handleCloseForm, refreshFoods}: FoodFormProps) => {
                     variant="outlined"
                     type="number"
                     fullWidth
-                    onChange={(e) => setGramsPerServing(parseInt(e.target.value))}
+                    onChange={(e) => {
+                        const value = parseInt(e.target.value)
+                        setGramsPerServing(value >= 0 ? value : 0);
+                    }}
                 />
                 <TextField
                     style={{flex: "1"}}
@@ -162,7 +168,10 @@ const FoodForm = ({handleCloseForm, refreshFoods}: FoodFormProps) => {
                     variant="outlined"
                     type="number"
                     fullWidth
-                    onChange={(e) => setCaloriesPerServing(parseInt(e.target.value))}
+                    onChange={(e) => {
+                        const value = parseInt(e.target.value);
+                        setCaloriesPerServing(value >= 0 ? value : 0);
+                    }}
                 />
                 <Box
                     paddingTop={'15px'}

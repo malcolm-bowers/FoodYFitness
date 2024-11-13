@@ -2,8 +2,12 @@ import {describe, expect, it} from "vitest";
 import FoodList from "../food-list.tsx";
 import {render, screen} from "@testing-library/react";
 
+const mockFoodsArray = [
+    { name: 'Glazed Donut', servings: 1, gramsPerServing: 55, caloriesPerServing: 275, totalCalories: 275 }
+]
+
 const doRender = () => {
-    render(<FoodList/>)
+    render(<FoodList foods={mockFoodsArray}/>)
 }
 
 describe('Food List', () => {
@@ -22,9 +26,9 @@ describe('Food List', () => {
         })
         it('should show the first food row and related fields', () => {
             doRender()
-            expect(screen.getByRole('rowheader', {name: /donut/i})).toBeVisible()
+            expect(screen.getByRole('rowheader', {name: /glazed donut/i})).toBeVisible()
             expect(screen.getAllByRole('cell', {name: /1/i})[0]).toBeVisible()
-            expect(screen.getAllByRole('cell', {name: /23/i})[0]).toBeVisible()
+            expect(screen.getAllByRole('cell', {name: /55/i})[0]).toBeVisible()
             expect(screen.getAllByRole('cell', {name: /275/i})[0]).toBeVisible()
             expect(screen.getAllByRole('cell', {name: /275/i})[1]).toBeVisible()
         })

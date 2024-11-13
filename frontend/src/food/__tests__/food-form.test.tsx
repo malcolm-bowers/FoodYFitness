@@ -31,7 +31,7 @@ describe("Add Food Form", () => {
     it('should show the first result from the search', () => {
         doRender()
         expect(screen.getByRole('rowheader', {name: /glazed donut/i})).toBeVisible()
-        expect(screen.getByRole('cell', {name: /23/i})).toBeVisible()
+        expect(screen.getByRole('cell', {name: /55/i})).toBeVisible()
         expect(screen.getByRole('cell', {name: /275/i})).toBeVisible()
     })
     it('should show the new food header', () => {

@@ -5,13 +5,19 @@ import {useEffect, useState} from "react";
 import FoodForm from "./food-form.tsx";
 import {Dialog} from "@mui/material";
 import {getFoods} from "./food-service.ts";
+import {ExerciseCalculator} from "../exercise/exercise-calculator.tsx";
 
 const FoodPage = () => {
     const [showForm, setShowForm] = useState(false);
     const [foods, setFoods] = useState(getFoods());
+    const [totalCalories, setTotalCalories] = useState(0);
 
     const refreshFoods = () => {
-        setFoods([...getFoods()]); // Spread to trigger re-render
+        const updatedFoods = getFoods();
+        setFoods([...updatedFoods]);
+
+        const total = updatedFoods.reduce((sum, food) => sum + food.totalCalories, 0);
+        setTotalCalories(total);
     };
 
     useEffect(() => {
@@ -29,15 +35,7 @@ const FoodPage = () => {
     return (
         <Box className="food-page" style={{padding: "20px"}}>
             <h1 className="page-header">Food Page</h1>
-            <Box
-                style={{
-                    display: 'flex',
-                    flexDirection: 'row',
-                    justifyContent: 'space-around'
-                }}
-            >
-                <FoodList foods={foods} />
-            </Box>
+            <FoodList foods={foods} />
             <Box style={{display: "flex", justifyContent: "flex-end"}}>
                 <Button variant={"contained"} onClick={handleOpenForm}>Add Food</Button>
             </Box>
@@ -47,6 +45,7 @@ const FoodPage = () => {
             >
                 <FoodForm handleCloseForm={handleCloseForm} refreshFoods={refreshFoods} />
             </Dialog>
+            <ExerciseCalculator totalCalories={totalCalories} />
         </Box>
     )
 }
