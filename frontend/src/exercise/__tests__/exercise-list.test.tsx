@@ -16,7 +16,7 @@ describe("ExerciseList", () => {
     })
     describe("Renders correctly", () => {
         beforeEach(() => {
-            render(<ExerciseList exercises={mockExercises} getSelectedExercise={vi.fn()}/>);
+            render(<ExerciseList exercises={mockExercises} getSelectedExercise={vi.fn()} getExercises={vi.fn()}/>);
         })
         it("should show header", () => {
             expect(screen.getByRole('heading', {name: /exercise list/i})).toBeVisible();
@@ -41,7 +41,7 @@ describe("ExerciseList", () => {
             const mockDeleteExercise = vi.spyOn(exerciseService, 'deleteExercise')
                 .mockResolvedValue();
             vi.spyOn(window, 'confirm').mockReturnValueOnce(true)
-            render(<ExerciseList exercises={mockExercises} getSelectedExercise={vi.fn()}/>);
+            render(<ExerciseList exercises={mockExercises} getSelectedExercise={vi.fn()} getExercises={vi.fn()}/>);
 
             const listItems = await screen.getAllByRole('row');
             const exerciseToDelete = listItems[1];
@@ -53,7 +53,7 @@ describe("ExerciseList", () => {
         })
         it('should getSelectedExercise when the edit button is clicked', async () => {
             const mockSelectedExercise = vi.fn()
-            render(<ExerciseList exercises={mockExercises} getSelectedExercise={mockSelectedExercise}/>);
+            render(<ExerciseList exercises={mockExercises} getSelectedExercise={mockSelectedExercise} getExercises={vi.fn}/>);
             await userEvent.click(screen.getAllByRole('button', {name: /edit/i})[0]);
 
             expect(mockSelectedExercise).toHaveBeenCalledWith(mockExercises[0]);

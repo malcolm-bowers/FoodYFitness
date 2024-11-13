@@ -12,15 +12,19 @@ const ExercisePage = () => {
         setSelectedExercise(exercise)
     }
 
-    useEffect(() => {
+    const getExercises = () => {
         fetchExercise().then(d => setExercises(d))
-    }, [exercises]);
+    }
+
+    useEffect(() => {
+        getExercises()
+    }, []);
 
     return (
         <Box className="page-container">
             <h1 className="page-header">Exercises:</h1>
-            <ExerciseList exercises={exercises} getSelectedExercise={getSelectedExercise}/>
-            <ExerciseForm selectedExercise={selectedExercise} getSelectedExercise={getSelectedExercise}/>
+            <ExerciseList exercises={exercises} getSelectedExercise={getSelectedExercise} getExercises={getExercises} />
+            <ExerciseForm selectedExercise={selectedExercise} getSelectedExercise={getSelectedExercise} getExercises={getExercises} />
         </Box>
     )
 }

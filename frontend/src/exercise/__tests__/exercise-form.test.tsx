@@ -19,7 +19,7 @@ let submitButton: HTMLElement;
 let clearButton: HTMLElement;
 
 const doRender = (updateExercise: Exercise | null = null) => {
-    render(<ExerciseForm selectedExercise={updateExercise} getSelectedExercise={vi.fn()}/>)
+    render(<ExerciseForm selectedExercise={updateExercise} getSelectedExercise={vi.fn()} getExercises={vi.fn()}/>)
     nameInput = screen.getByLabelText(/name/i)
     typeInput = screen.getByRole('combobox', {name: /type/i})
     calorieInput = screen.getByLabelText(/calories\/rep/i)

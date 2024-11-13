@@ -13,22 +13,25 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 
 interface ExerciseTableProps {
-    exercises: Exercise[];
-    getSelectedExercise: (exercise: Exercise) => void
+    exercises: Exercise[],
+    getSelectedExercise: (exercise: Exercise) => void,
+    getExercises: () => void;
 }
 
-export default function ExerciseList({exercises, getSelectedExercise}: ExerciseTableProps) {
-    const handleDelete = (exercise: Exercise) => {
-        if (confirm(`Are you sure you want to delete this "${exercise.name}"?`)){
-            deleteExercise(exercise.id);
+const ExerciseList = ({exercises, getSelectedExercise, getExercises}: ExerciseTableProps) => {
+    const handleDelete = async (exercise: Exercise) => {
+        if (confirm(`Are you sure you want to delete this "${exercise.name}"?`)) {
+            await deleteExercise(exercise.id);
+            getExercises();
         }
     }
     const handleEdit = (exercise: Exercise) => {
         getSelectedExercise(exercise)
+        getExercises();
     }
 
     return (
-        <Box>
+        <Box style={{padding: '20px'}}>
             <Typography variant={"h5"}>
                 Exercise List
             </Typography>
@@ -66,3 +69,4 @@ export default function ExerciseList({exercises, getSelectedExercise}: ExerciseT
         </Box>
     );
 }
+export default ExerciseList;

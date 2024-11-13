@@ -8,10 +8,11 @@ import MenuItem from "@mui/material/MenuItem";
 
 interface ExerciseFromProps {
     selectedExercise?: Exercise | null,
-    getSelectedExercise: (exercise: (Exercise | null)) => void
+    getSelectedExercise: (exercise: (Exercise | null)) => void,
+    getExercises: () => void
 }
 
-const ExerciseForm = ({selectedExercise, getSelectedExercise}: ExerciseFromProps) => {
+const ExerciseForm = ({selectedExercise, getSelectedExercise, getExercises}: ExerciseFromProps) => {
     const [name, setName] = useState("");
     const [type, setType] = useState("");
     const [calories, setCalories] = useState(0.0);
@@ -27,7 +28,7 @@ const ExerciseForm = ({selectedExercise, getSelectedExercise}: ExerciseFromProps
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        if(selectedExercise) {
+        if (selectedExercise) {
             const exercise = {
                 id: selectedExercise.id,
                 name,
@@ -44,13 +45,14 @@ const ExerciseForm = ({selectedExercise, getSelectedExercise}: ExerciseFromProps
             await saveExercise(newExercise);
         }
         handleClear()
+        getExercises()
     }
 
     const handleClear = () => {
         setName("");
         setType("");
         setCalories(0.0);
-        if(selectedExercise) {
+        if (selectedExercise) {
             getSelectedExercise(null);
         }
     };
@@ -102,7 +104,7 @@ const ExerciseForm = ({selectedExercise, getSelectedExercise}: ExerciseFromProps
                         label="Type"
                         value={type}
                         onChange={(e) => setType(e.target.value)}
-                     variant={'outlined'}>
+                        variant={'outlined'}>
                         <MenuItem value={"Upper-Body"}>Upper-Body</MenuItem>
                         <MenuItem value={"Lower-Body"}>Lower-Body</MenuItem>
                         <MenuItem value={"Core"}>Core</MenuItem>
